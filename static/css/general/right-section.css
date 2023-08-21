@@ -1,0 +1,143 @@
+/* ---------- Right ---------- */
+
+.right {
+    margin-top: 1.4rem;
+}
+
+.right img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+}
+
+.right .top {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+}
+
+.right .top button {
+    display: none;
+}
+
+.right .top .theme-toggler {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.right .top .theme-toggler svg {
+    cursor: pointer;
+}
+
+.right .top .profile {
+    display: flex;
+    gap: 2rem;
+    text-align: right;
+}
+
+/* ---------- Recent Updates ---------- */
+
+.right .recent-updates,
+.right .recent-reports {
+    margin-top: 1rem;
+}
+
+.right .recent-updates h2,
+.right .recent-reports h2 {
+    margin-bottom: 0.8rem;
+}
+
+.right .recent-updates .updates,
+.right .recent-reports .updates {
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+.right .recent-updates .updates:hover,
+.right .recent-reports .updates:hover {
+    box-shadow: none;
+}
+
+.right .recent-updates .updates .update,
+.right .recent-reports .updates .update {
+    display: grid;
+    grid-template-columns: 2.6rem auto;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* ---------- Sales Analytics ---------- */
+
+.right .recent-reports {
+    margin-top: 1.55rem;
+}
+
+.right .recent-reports h2 {
+    margin-bottom: 0.8rem;
+}
+
+.right .recent-reports .item {
+    background: var(--color-white);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+    padding: 1.4rem var(--card-padding);
+    border-radius: var(--border-radius-3);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+.right .recent-reports .item:hover {
+    box-shadow: none;
+}
+
+.right .recent-reports .item .right {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+    margin: 0;
+}
+
+.right .recent-reports .item .right .percent,
+.right .recent-reports .item .right .num {
+    font-weight: var(--fw-semibold);
+    font-size: 1rem;
+}
+
+.right .recent-reports .item .icon {
+    font-size: 1.4rem;
+    display: flex;
+    padding: 0.6rem;
+    border-radius: 50%;
+    color: var(--color-white);
+    background: var(--color-primary);
+}
+
+.right .recent-reports .item.offline .icon {
+    background: var(--color-danger);
+}
+
+.right .recent-reports .item.customers .icon {
+    background: var(--color-success);
+}
+
+.right .recent-reports .add-product {
+    background: transparent;
+    border: 2px dashed var(--color-primary);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right .recent-reports .add-product div {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}

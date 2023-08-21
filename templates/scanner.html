@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>QR Code Scanner</title>
+
+  <link rel="stylesheet" href="./css/scan-code.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+  <script src="./js/scan-code.js" defer></script>
+</head>
+<body>
+  <main>
+    <div class="scanner">
+      <video id="video" width="400" height="400"></video>
+      <canvas id="canvas" style="display: none;"></canvas>
+    </div>
+    <div id="output"></div>
+  </main>
+</body>
+</html>

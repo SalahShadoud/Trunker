@@ -1,0 +1,632 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trunker | Manager Dashboard</title>
+
+    <!-- Fonts Links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS & JS Links -->
+    <link rel="stylesheet" href="{%static 'css/general/css-resets.css' %}">
+    <link rel="stylesheet" href="{%static 'css/general/root.css' %}">
+    <link rel="stylesheet" href="{%static 'css/general/utilities.css' %}">
+    <link rel="stylesheet" href="{%static 'css/general/dark-mode.css' %}">
+    <link rel="stylesheet" href="{%static 'css/general/left-section.css' %}">
+    <link rel="stylesheet" href="{%static 'css/general/right-section.css' %}">
+    <link rel="stylesheet" href="{%static 'css/general/main-section.css' %}">
+    <link rel="stylesheet" href="{%static 'css/manager/manager.css' %}">
+    <link rel="stylesheet" href="{%static 'css/manager/manager-modals.css' %}">
+    <link rel="stylesheet" href="{%static 'css/general/media-queries.css' %}">
+
+    <!-- Ionicons CDN -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <ion-icon name="cube"></ion-icon>
+                    <h2>Trunk<span class="danger">er</span></h2>
+                </div>
+
+                <div class="close" id="close-btn">
+                    <ion-icon name="close"></ion-icon>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="#" class="section-link" id="dashboard">
+                    <ion-icon name="apps-outline"></ion-icon>
+                    <h3>Dashboard</h3>
+                </a>
+
+                <a href="#" class="section-link" id="employees">
+                    <ion-icon name="people"></ion-icon>
+                    <h3>Employees</h3>
+                </a>
+
+                <a href="#" class="section-link" id="orders">
+                    <ion-icon name="cash"></ion-icon>
+                    <h3>Orders</h3>
+                </a>
+
+                <a href="#" class="section-link" id="products">
+                    <ion-icon name="clipboard"></ion-icon>
+                    <h3>Products</h3>
+                </a>
+                <a href="#" class="section-link" id="reports-replays">
+                    <ion-icon name="repeat-outline"></ion-icon>
+                    <h3>Admin Replies</h3>
+                </a>
+                <a href="/logout" id="logout">
+                    <ion-icon name="log-out" id="logout"></ion-icon>
+                    <h3>Logout</h3>
+                </a>
+                
+            </div>
+        </aside>
+        <!---------- End of Aside ---------->
+
+        <main>
+            <dialog class="report-order-modal modal" id="{{ order.id }}">
+                <form action="/AddReport" method = "POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="report-ordre-id" name="order_id">
+                <label for="report-message">Your Message for the Admins About this Order:</label>
+                <textarea name="report-message" id="" cols="40" rows="5" style="resize: none"></textarea>
+                
+                <div class="buttons">
+                    <button type="button" class="cancel-btn-order">Cancel</button>
+                    <button type="submit" class="submit-btn-order">Send Report</button>
+                </div>
+            </form>
+            </dialog>
+
+            <dialog class="delivered-modal modal" id = "{{ order.id }}">
+                <p>Sure You Want to Delete This Order as Delivered?</p>
+                <form action="/DeleteOrder" method="POST">
+                    {% csrf_token %}
+                <input type="hidden" name="order_id" id="delete-order-id">
+                <div class="buttons">
+                    <button type="button" class="cancel-btn-delivered">No</button>
+                    <button type="submit" class="submit-btn-delivered">Yes</button>
+                </div>
+            </form>
+            </dialog>
+
+            <dialog class="report-product-modal modal" id="{{ product.id }}">
+                <form action="/AddReport" method = "POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="report-product-id" name="product_id">
+                <label for="report-message">Your Message for the Admins:</label>
+                <textarea name="report-message" id="" cols="40" rows="5" style="resize: none"></textarea>
+                <div class="buttons">
+                    
+                    <button type="button" class="cancel-btn-product">Cancel</button>
+                    <button type="submit" class="submit-btn-product">Send Report</button>
+                </div>
+            </form>
+            </dialog>
+
+            <dialog class="add-product-modal modal" >
+                <div class="modal-container flex-column">
+                    <form action="/AddProduct" method = "POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                       
+                    <div class="row flex">
+                        <div class="input-wrapper flex-column">
+                            {% comment %} <button class="upload-pic-btn">Upload Photo</button> {% endcomment %}
+                            <input class="upload-pic-btn" id="upload-photo" type="file" accept="image/*" name="image"  placeholder="Upload Photo">
+                        </div>
+                    </div>
+
+                    <div class="row flex">
+                        <div class="input-wrapper flex-column">
+                            <label for="name">Product Name:</label>
+                            <input type="text" name="name" required>
+                        </div>
+                        <div class="input-wrapper flex-column">
+                            <label for="brand">Brand:</label>
+                            <input type="text" name="brand" required>
+                        </div>
+                    </div>
+
+                    <div class="row flex">
+                        <div class="input-wrapper flex-column">
+                            <label for="category">Category:</label>
+                            <input type="text" name="category" required>
+                        </div>
+                        <div class="input-wrapper flex-column">
+                            <label for="count">Count:</label>
+                            <input type="number" name="count" required>
+                        </div>
+
+                    </div>
+
+                    <div class="buttons flex">
+                        <button class="add-product-cancel-btn">Cancel</button>
+                        <button type="submit" class="add-product-submit-btn">Add Product</button>
+                    </div>
+                </form>
+                </div>
+            </dialog>
+            <dialog class="add-order-modal modal">
+                <div class="modal-container flex-column">
+                    <form action="/AddOrder" method="POST">
+                        {% csrf_token %}
+                    <div class="row flex">
+                        <div class="input-wrapper flex-column">
+                            <label for="order-name">Order Name:</label>
+                            <input type="text" name="order-name" required>
+                        </div>
+                        <div class="input-wrapper flex-column">
+                            <label for="date-time">Date & Time:</label>
+                            <input type="datetime-local" name="date-time" required>
+                        </div>
+                        
+                    </div>
+
+                    <div class="buttons flex">
+                        <button type="button" class="add-order-cancel-btn">Cancel</button>
+                        <button type="submit" class="add-order-submit-btn">Add Order</button>
+                    </div>
+                </form>
+                </div>
+            </dialog>
+            <dialog class="edit-product-modal modal" id="edit-dialog">
+                <div class="modal-container flex-column">
+                    <input type="hidden" id="product-id" name="product_id">
+
+                    <div class="row flex">
+                        <div class="input-wrapper flex-column">
+                            <label for="name">Product Name:</label>
+                            <input id="prod_name" type="text" name="name">
+                        </div>
+                        <div class="input-wrapper flex-column">
+                            <label for="brand">Brand:</label>
+                            <input id="prod_brand" type="text" name="brand">
+                        </div>
+                    </div>
+
+                    <div class="row flex">
+                        <div class="input-wrapper flex-column">
+                            <label for="category">Category:</label>
+                            <input id="prod_category" type="text" name="category">
+                        </div>
+                        <div class="input-wrapper flex-column">
+                            <label for="count">Count:</label>
+                            <input id="prod_count" type="text" name="count">
+                        </div>
+                    </div>
+
+                    <div class="buttons flex">
+                        <button type="button" class="edit-product-cancel-btn">Cancel</button>
+                        <button type="submit" class="edit-product-submit-btn">Save Changes</button>
+                    </div>
+            
+                </div>
+            </dialog>
+
+            <section class="dashboard">
+                <h1>Dashboard</h1>
+
+                <div class="insights">
+
+                    <!--------- Sales  ---------->
+                    <div class="sales">
+                        <ion-icon name="calculator"></ion-icon>
+                        <div class="info">
+                            <div class="left">
+                                <h3>Total Sales</h3>
+                                <h1>$25,024</h1>
+                            </div>
+                            <div class="progress">
+                                <svg>
+                                    <circle cx="38" cy="38" r="36"></circle>
+                                </svg>
+                                <div class="number">
+                                    <p>81%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <small class="text-muted">Last 24 Hours</small>
+                    </div>
+                    <!---------- End of Sales  ---------->
+
+                    <!--------- Expenses  ---------->
+                    <div class="expenses">
+                        <ion-icon name="newspaper-outline"></ion-icon>
+                        <div class="info">
+                            <div class="left">
+                                <h3>Total Expenses</h3>
+                                <h1>$14,160</h1>
+                            </div>
+                            <div class="progress">
+                                <svg>
+                                    <circle cx="38" cy="38" r="36"></circle>
+                                </svg>
+                                <div class="number">
+                                    <p>62%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <small class="text-muted">Last 24 Hours</small>
+                    </div>
+                    <!---------- End of Expenses  ---------->
+
+                    <!--------- Income  ---------->
+                    <div class="income">
+                        <ion-icon name="cash"></ion-icon>
+                        <div class="info">
+                            <div class="left">
+                                <h3>Total Income</h3>
+                                <h1>$10,864</h1>
+                            </div>
+                            <div class="progress">
+                                <svg>
+                                    <circle cx="38" cy="38" r="36"></circle>
+                                </svg>
+                                <div class="number">
+                                    <p>44%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <small class="text-muted">Last 24 Hours</small>
+                    </div>
+                    <!---------- End of Income  ---------->
+                </div>
+                <!---------- End of Insights  ---------->
+
+                <div class="recent-orders table-container">
+                    <h2>Recent Orders</h2>
+                    <table class="recent-orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order Name</th>
+                                <th>Order Num.</th>
+                                <th>Driver</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Report</th>
+                                <th>Mark Delivered</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in recent_orders %}
+                            <tr >
+                                <td>{{ order.name }}</td>
+                                <td>{{ order.number }}</td>
+                                <td>{{ order.user.user.username }}</td>
+                                <td>{{ order.date }}</td>
+                                {% if order.status == pending %}
+                                <td class="warning">
+                                  {{ order.status }} </td>
+                                {% else %}
+                                <td class="success">
+                                    {{ order.status }} </td>
+                                {% endif %}
+                                <td><ion-icon class="danger report-order-btn" name="information-circle-outline" size="small" 
+                                    data-target="{{ order.id }}" ></ion-icon></td>
+                                  <td><ion-icon class="success delivered-btn" name="checkmark-outline" size="small"></ion-icon></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="#" id="show-all">Show All</a>
+                </div>
+            </section>
+
+            <section class="employees">
+                <h1>Employees</h1>
+
+                <div class="filters-wrapper flex">
+                    <div class="filters flex">
+                        <span class="text">Filter By:</span>
+                        <a href="{% url 'manager' %}?order_by=employee_name"><button class="filter name" name="name" value="name">Name</button></a>
+                        <a href="{% url 'manager' %}?order_by=employee_status"><button class="filter status">Status</button></a>
+                    </div>
+                </div>
+
+                <div class="recent-orders table-container">
+                    <table class="employees-table">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Number</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for driver in drivers_list %}
+                            <tr>
+                                <td>{{ driver.user.username }}</td>
+                                <td>{{ driver.number }} </td>
+                                <td>{{ driver.user.email }} </td>
+                                {% if driver.userStatus == unavailable %}
+                                <td class="danger"> {{ driver.userStatus }} </td>
+                                {% else %}
+                                <td class="success"> {{ driver.userStatus }} </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="orders">
+                <h1>Orders</h1>
+
+                <div class="filters-wrapper flex">
+                    <div class="filters flex">
+                        <span class="text">Filter By:</span>
+                        <a href= "{% url 'manager' %}?order_by=order_name"><button class="filter driver">Driver</button></a>
+
+                        <input type="date" name="date" id="date" style="display: none;">
+                        <button class="filter date" id="buttonid">Date</button>
+                        <a id= "link" href="{% url 'manager' %}?order_by=date"></a>
+
+                        <a href="{% url 'manager' %}?order_by=order_status"><button class="filter status">Status</button></a>
+                    </div>
+
+                    <button class="filter flex add-order-btn"><ion-icon name="add-outline"></ion-icon> Add
+                        Order</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order Name</th>
+                                <th>Order Num.</th>
+                                <th>Driver</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Report</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders_list %}
+                            <tr >
+                                <td>{{ order.name }}</td>
+                                <td>{{ order.number }}</td>
+                                <td>{{ order.user.user.username }}</td>
+                                <td>{{ order.date }}</td>
+                                {% if order.status == pending %}
+                                <td class="warning">
+                                  {{ order.status }} </td>
+                                {% else %}
+                                <td class="success">
+                                    {{ order.status }} </td>
+                                {% endif %}
+                                <td><ion-icon class="danger report-order-btn" name="information-circle-outline" size="small" 
+                                    data-target="{{ order.id }}" ></ion-icon></td>
+                                  <td><ion-icon id="delete-order" class="delivered-btn success" name="checkmark-outline" size="small" data-target="{{ order.id }}"></ion-icon></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="products">
+                <h1>Products</h1>
+
+                <div class="filters-wrapper flex">
+                    <div class="filters flex">
+                        <span class="text">Filter By:</span>
+                        <a href="{% url 'manager' %}?order_by=brand"><button class="filter brand">Brand</button></a>
+                        <a href="{% url 'manager' %}?order_by=category"><button class="filter category">Category</button></a>
+                        <a href="{% url 'manager' %}?order_by=availability"><button class="filter availabilty">Availabilty</button></a>
+                    </div>
+                </div>
+
+                <div class="products-container">
+
+                    <div class="product add-product-card flex">
+                        <div class="add-product-btn flex">
+                            <ion-icon name="add-outline" size="large"></ion-icon>
+                        </div>
+                    </div>
+                    {% for product in products_list %}
+                    <div class="product flex-column" data-product-id="{{ product.id }}">
+                    <div class="flex">
+                        <img src="{{ product.prod_img.url }}" alt="product image" width="100">
+                        <div class="product-details flex-column">
+                            <h3 class="product__name" id="name">{{ product.name}}</h3>
+                            <p class="product__brand" id="brand"><span class="title">Brand:</span>
+                                {{ product.brand }}
+                            </p>
+                            <p class="product__category" id="category"><span class="title">Category:
+
+                            </span> {{ product.category }}
+                             </p>
+                        </div>
+                    </div>
+                    <div class="product-info flex">
+                        <div class="product-modify-btns flex">
+                        <ion-icon id="report" class="danger report-product-btn" name="information-circle-outline" size="small" data-target="{{ product.id }}"></ion-icon>
+                        <ion-icon id="edit" class="primary edit-product-btn" name="create-outline" size="small" data-target="{{ product.id }}"></ion-icon>
+                        </div>
+            
+                        <p class="product__count" id="count"><span class="title">Count:</span>
+                            {{product.count}}
+                          </p>
+
+                        {% if product.count == 0 %}
+                        <p class="product__availability danger"> Out of Stock</p>
+                        {% else %}
+                        <p class="product__availability success">Available</p>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+                {% endfor %}
+                </div>
+            </section>
+                
+            <section class="reports-replays">
+                <h1>Replies</h1>
+                <div class="report-replay flex-column">
+                    {% for reply in reports_with_reply %}
+                    <div class="info flex">
+                        <div class="details flex-column">
+                            <p class="report__admin" id="manager">Admin: Marah</p>
+                            {% if reply.reportType == order %}
+                            <p class="report__order" id="order-name">Order: {{ reply.order.name }}</p>
+                            <p class="report__order__num" id="order-num">Order Number: 
+                                {{ reply.order.number }} </p>
+                            {% else %}
+                            <p class="report__order" id="order-name">Product:
+                                 {{ reply.product.name }}</p>
+                            <p class="report__order__num" id="order-num">Product Brand: 
+                                {{ reply.product.brand }} </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="message">
+                        <p class="message" id="reported-message"> {{ reply.adminReply }} </p>
+                    </div>
+                    <div>
+                        <p> {{ reply.reply_time }} </p>
+                    </div>
+                    {% endfor %}
+                </div>
+                    
+            </section>
+        </main>
+        <!---------- End of Main ---------->
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <ion-icon name="menu"></ion-icon>
+                </button>
+                <div class="theme-toggler">
+                    <svg class="darkMode" width="26" height="26" viewBox="0 0 60 60" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path class="sun"
+                            d="M60 30C60 46.5685 46.5685 60 30 60C13.4315 60 0 46.5685 0 30C0 13.4315 13.4315 0 30 0C46.5685 0 60 13.4315 60 30Z"
+                            fill="#FFC700" />
+                    </svg>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{ user_profile.user.username }}</b></p>
+                        <small class="text-muted">{{ user_profile.userType }}</small>
+                    </div>
+                    <div class="profile-img">
+                        <img src="{{ user_profile.profileimg.url }}">
+                    </div>
+                </div>
+            </div>
+            <!---------- End of Top ---------->
+
+            <div class="recent-updates">
+                <h2>Recent Updates</h2>
+                <div class="updates">
+                    <div class="update">
+                        <div class="profile-img">
+                            <img src="./assets/images/profile-2.jpg">
+                        </div>
+                        <div class="message">
+                            <p><b>Mike Tyson</b> received his order of Night Lion Tech GPS Drone</p>
+                            <small class="text-muted">2 Minutes Ago</small>
+                        </div>
+                    </div>
+
+                    <div class="update">
+                        <div class="profile-img">
+                            <img src="./assets/images/profile-3.jpg">
+                        </div>
+                        <div class="message">
+                            <p><b>Diana Ayi</b> Declined her order of 2 DJI Air 2S</p>
+                            <small class="text-muted">5 Minutes Ago</small>
+                        </div>
+                    </div>
+
+                    <div class="update">
+                        <div class="profile-img">
+                            <img src="./assets/images/profile-4.jpg">
+                        </div>
+                        <div class="message">
+                            <p><b>Mandy Roy</b> received her order of LARVENDER KF102 Drone</p>
+                            <small class="text-muted">2 Minutes Ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---------- End of Recent Updates ---------->
+
+            <div class="recent-reports">
+                <h2>Admin Replies</h2>
+                <div class="updates">
+                    {% for report in recent_report %}
+                    <div class="update">
+                        <div class="profile-img">
+                            <img src="{{ report.user.profileimg.url }}">
+                        </div>
+                    
+                        <div class="message">
+                            {% if report.reportType == order %}
+                            <p><b>Admin said about order {{report.order.number }}: </b>
+                                {{ report.adminReply }}</p>
+                            <small class="text-muted">{{ report.reply_time }}</small>
+                            {% else %}
+                            <p><b>Admin said about product {{ report.product.name }}: </b>
+                                {{ report.adminReply }}</p>
+                            <small class="text-muted">{{ report.reply_time }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+            <!---------- End of Right ---------->
+
+        </div>
+
+        <!-- Adding Data JS Links -->
+        {% comment %} <script src="{%static 'js/data/orders.js' %}"></script> {% endcomment %}
+        <script src="{%static 'js/data/products.js' %}"></script>
+        <script src="{%static 'js/data/adding-data/manager/manager-add-orders.js' %}"></script>
+        {% comment %} <script src="{%static 'js/data/adding-data/manager/manager-add-products.js' %}"></script> {% endcomment %}
+
+        <!-- Functional JS Links -->
+        <script src="{%static 'js/menu-close-btns.js' %}"></script>
+        <script src="{%static 'js/managerSectionsTransition.js' %}"></script>
+        <script src="{%static 'js/theme-toggler.js' %}"></script>
+        <script src="{%static 'js/manager-modals.js' %}"></script>
+        <script src="{%static 'js/added/handle_date.js' %}"></script>
+        <script src="{%static 'js/added/edit_product.js' %}"></script>
+        <script src="{%static 'js/added/product_report.js' %}"></script>
+        <script src="{%static 'js/added/report_order.js' %}"></script>
+        <script src="{%static 'js/added/remove_filters.js' %}"></script>
+        <script src="{%static 'js/added/delete_order.js' %}"></script>
+        <!-- Anime.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</body>
+</html>

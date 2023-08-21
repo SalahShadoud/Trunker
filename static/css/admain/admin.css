@@ -1,0 +1,204 @@
+/* ---------- General ---------- */
+
+html {
+  font-size: 14px;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.88rem;
+  background: var(--color-background);
+  color: var(--color-dark);
+  user-select: none;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+ion-icon {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+ion-icon:hover {
+  scale: 1.1;
+}
+
+/* ---------- Container ---------- */
+
+.container {
+  display: grid;
+  gap: 1.8rem;
+  grid-template-columns: 14rem auto 23rem;
+  width: 96%;
+  margin: 0 auto;
+  height: 100vh;
+}
+
+/* ---------- Table Containers ---------- */
+
+/* Dashboard */
+
+main .table-container {
+  margin-top: 2rem;
+}
+
+main .table-container h2 {
+  margin-bottom: 0.8rem;
+}
+
+main .table-container table {
+  background-color: var(--color-white);
+  width: 100%;
+  border-radius: var(--card-border-radius);
+  padding: var(--card-padding);
+  text-align: center;
+  box-shadow: var(--box-shadow);
+  transition: all 300ms ease;
+}
+
+main .table-container table:hover {
+  box-shadow: none;
+}
+
+main table tbody td {
+  height: 2.8rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--color-light);
+  color: var(--color-dark-variant);
+}
+
+main table tbody td:nth-child(4),
+main table tbody td:nth-child(5) {
+  font-weight: var(--fw-semibold);
+}
+
+main table tbody tr:last-child td {
+  border: none;
+}
+
+main .table-container #show-all {
+  display: block;
+  text-align: center;
+  margin: 1rem auto;
+  color: var(--color-primary);
+}
+
+/* Orders */
+
+.orders h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+}
+
+/* Employees */
+
+.employees {
+  gap: 1.5rem
+}
+
+.employees h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+}
+
+/* Products */
+
+.products h1 {
+  margin-bottom: 1rem;
+}
+
+.products .products-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding-block: 1.4rem;
+}
+
+.product {
+  max-width: 280px;
+  gap: 0.8rem;
+  font-size: 0.8rem;
+  background: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  transition: all 300ms ease;
+}
+
+.product:hover {
+  box-shadow: none;
+}
+
+.product .flex {
+  gap: 1rem;
+}
+
+.product .product-details {
+  justify-content: space-around;
+}
+
+.product .product__name {
+  font-size: inherit;
+  color: var(--color-dark-variant);
+}
+
+.product .product-info {
+  justify-content: space-between;
+}
+
+.product .title {
+  font-weight: var(--fw-semibold);
+}
+
+/* Reports */
+
+.reports-container {
+  flex-wrap: wrap;
+  gap: 2rem 2rem;
+  margin-top: 2.5rem;
+}
+
+.report {
+  width: max-content;
+  gap: 1rem;
+  background: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  transition: all 300ms ease;
+}
+
+.report:hover {
+  box-shadow: none;
+}
+
+.report .info {
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.report .details {
+  gap: 0.3rem;
+}
+
+.report .info .replay-icon {
+  width: 2rem;
+  height: 2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.report .info .replay-icon:hover {
+  opacity: 0.8;
+  scale: 1.1;
+}
+
+.message {
+  max-width: 220px;
+}

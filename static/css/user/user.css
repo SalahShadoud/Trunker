@@ -1,0 +1,131 @@
+/* ---------- General ---------- */
+
+html {
+  font-size: 14px;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.88rem;
+  background: var(--color-background);
+  color: var(--color-dark);
+  user-select: none;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+ion-icon {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+ion-icon:hover {
+  scale: 1.1;
+}
+
+/* ---------- Products ---------- */
+
+.products .products-container {
+  overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 1.4rem;
+}
+
+.product {
+  max-width: 280px;
+  gap: 1.5rem;
+  font-size: 0.8rem;
+  background: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  transition: all 300ms ease;
+}
+
+.product:hover {
+  box-shadow: none;
+}
+
+.product .flex {
+  gap: 1rem;
+}
+
+.product .flex img {
+  border-radius: 50%;
+}
+
+.product .product-details {
+  justify-content: space-around;
+}
+
+.product p {
+  font-weight: var(--fw-semibold);
+}
+
+.product .cart {
+  justify-content: space-between;
+}
+
+.product .cart .count {
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-1);
+  background: var(--color-dark);
+}
+
+.product .cart .count .num {
+  color: var(--color-white);
+}
+
+.product .cart .buttons {
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.product .cart .buttons button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: var(--border-radius-1);
+  background: var(--color-primary);
+  color: #ffffff;
+  transition: all 300ms ease;
+  cursor: pointer;
+}
+
+/* ---------- Media Queries ---------- */
+
+@media screen and (max-width: 1200px) {
+  .container {
+    width: 98%;
+    grid-template-columns: 7rem auto 23rem;
+  }
+
+  .products .products-container {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  main {
+    height: max-content;
+    margin-top: 8rem;
+    padding: 0 1rem;
+  }
+
+  .products .products-container {
+    justify-content: center;
+  }
+}

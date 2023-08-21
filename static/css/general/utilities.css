@@ -1,0 +1,128 @@
+/* ---------- Classes ---------- */
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--color-dark);
+}
+
+h1 {
+  font-weight: var(--fw-bold);
+  font-size: 1.8rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: var(--fw-semibold);
+}
+
+h3 {
+  font-weight: var(--fw-medium);
+  font-size: 0.87rem;
+}
+
+h4 {
+  font-weight: var(--fw-regular);
+  font-size: 0.8rem;
+}
+
+h5 {
+  font-weight: var(--fw-light);
+  font-size: 0.77rem;
+}
+
+p {
+  color: var(--color-dark-variant);
+}
+
+b {
+  color: var(--color-dark);
+}
+
+.small {
+  font-size: 0.75rem;
+}
+
+.profile-photo {
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.text-muted {
+  color: var(--color-info-dark);
+}
+
+.noTransition {
+  transition: none !important;
+}
+
+/* ---------- Colors ---------- */
+
+.primary {
+  color: var(--color-primary);
+}
+
+.danger {
+  color: var(--color-danger);
+}
+
+.success {
+  color: var(--color-success);
+}
+
+.warning {
+  color: var(--color-warning);
+}
+
+/* ----------- Filters ----------- */
+
+.employees .filters-wrapper,
+.orders .filters-wrapper {
+  justify-content: space-between;
+}
+
+.filters-wrapper {
+  margin-top: 2.6rem;
+  flex-wrap: wrap;
+}
+
+.filters {
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filters-wrapper .text {
+  font-size: 1.2rem;
+  font-weight: var(--fw-semibold);
+}
+
+.filter {
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: var(--border-radius-1);
+  background: var(--color-primary);
+  color: #FFFFFF;
+  transition: all 300ms ease;
+  cursor: pointer;
+}
+
+.filter ion-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  align-self: center;
+  margin-right: 0.5rem;
+}
+
+.filter:hover {
+  opacity: 0.8;
+}
