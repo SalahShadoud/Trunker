@@ -1,6 +1,7 @@
 # Build the project
 echo "Building the project..."
-python -m pip install -r requirements.txt
+pip install Django
+pip freeze
 echo "Make Migration..."
 python manage.py makemigrations --noinput
 python manage.py migrate --noinput
